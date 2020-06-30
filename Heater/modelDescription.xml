@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiModelDescription
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  fmiVersion="2.0"
+  modelName="Heater"
+  guid="{f9fd9ac5-e928-4f40-869d-f3292ba07eba}"
+  generationTool="Dymola Version 2021 (64-bit), 2020-05-13"
+  generationDateAndTime="2020-06-30T20:08:21Z"
+  variableNamingConvention="structured"
+  numberOfEventIndicators="4">
+  <CoSimulation
+    modelIdentifier="Heater"
+    canHandleVariableCommunicationStepSize="true"
+    canInterpolateInputs="true"
+    maxOutputDerivativeOrder="1"
+    canGetAndSetFMUstate="true"
+    canSerializeFMUstate="true"
+    providesDirectionalDerivative="true">
+    <SourceFiles>
+      <File
+        name="all.c"/>
+    </SourceFiles>
+  </CoSimulation>
+  <UnitDefinitions>
+    <Unit
+      name="1/K">
+      <BaseUnit K="-1"/>
+    </Unit>
+    <Unit
+      name="J/K">
+      <BaseUnit kg="1"
+        m="2"
+        s="-2"
+        K="-1"/>
+    </Unit>
+    <Unit
+      name="K">
+      <BaseUnit K="1"/>
+      <DisplayUnit
+        name="degC"
+        offset="-273.15"/>
+    </Unit>
+    <Unit
+      name="K/s">
+      <BaseUnit s="-1"
+        K="1"/>
+    </Unit>
+    <Unit
+      name="Ohm">
+      <BaseUnit kg="1"
+        m="2"
+        s="-3"
+        A="-2"/>
+    </Unit>
+    <Unit
+      name="S">
+      <BaseUnit kg="-1"
+        m="-2"
+        s="3"
+        A="2"/>
+    </Unit>
+    <Unit
+      name="V">
+      <BaseUnit kg="1"
+        m="2"
+        s="-3"
+        A="-1"/>
+    </Unit>
+    <Unit
+      name="W/K">
+      <BaseUnit kg="1"
+        m="2"
+        s="-3"
+        K="-1"/>
+    </Unit>
+    <Unit
+      name="degC">
+      <BaseUnit K="1"
+        offset="273.15"/>
+    </Unit>
+  </UnitDefinitions>
+  <TypeDefinitions>
+    <SimpleType
+      name="Modelica.Blocks.Interfaces.BooleanInput">
+      <Boolean/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.Blocks.Interfaces.RealOutput">
+      <Real/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Conductance">
+      <Real
+        quantity="Conductance"
+        unit="S"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.HeatCapacity">
+      <Real
+        quantity="HeatCapacity"
+        unit="J/K"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.LinearTemperatureCoefficient">
+      <Real
+        quantity="LinearTemperatureCoefficient"
+        unit="1/K"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Resistance">
+      <Real
+        quantity="Resistance"
+        unit="Ohm"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Temperature">
+      <Real
+        quantity="ThermodynamicTemperature"
+        unit="K"
+        displayUnit="degC"
+        min="0.0"
+        nominal="300.0"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.ThermalConductance">
+      <Real
+        quantity="ThermalConductance"
+        unit="W/K"/>
+    </SimpleType>
+    <SimpleType
+      name="Modelica.SIunits.Voltage">
+      <Real
+        quantity="ElectricPotential"
+        unit="V"/>
+    </SimpleType>
+  </TypeDefinitions>
+  <DefaultExperiment startTime="0.0"
+    stopTime="1.0"
+    tolerance="0.0001"/>
+  <ModelVariables>
+    <!-- Index for next variable = 1 -->
+    <ScalarVariable
+      name="TAmb"
+      valueReference="16777216"
+      description="Ambient Temperature"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Temperature"
+        start="293.15"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 2 -->
+    <ScalarVariable
+      name="constantVoltage.V"
+      valueReference="16777217"
+      description="Value of constant voltage"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Voltage"
+        start="10"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 3 -->
+    <ScalarVariable
+      name="heatCapacitor.C"
+      valueReference="16777218"
+      description="Heat capacity of element (= cp*m)"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.HeatCapacity"
+        start="1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 4 -->
+    <ScalarVariable
+      name="heatCapacitor.T"
+      valueReference="33554432"
+      description="Temperature of element">
+      <Real
+        declaredType="Modelica.SIunits.Temperature"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 5 -->
+    <ScalarVariable
+      name="der(heatCapacitor.T)"
+      valueReference="587202560"
+      description="der(Temperature of element)">
+      <Real
+        unit="K/s"
+        derivative="4"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 6 -->
+    <ScalarVariable
+      name="heatingResistor.R_ref"
+      valueReference="16777219"
+      description="Resistance at temperature T_ref"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Resistance"
+        start="10"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 7 -->
+    <ScalarVariable
+      name="heatingResistor.T_ref"
+      valueReference="16777220"
+      description="Reference temperature"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Temperature"
+        start="293.15"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 8 -->
+    <ScalarVariable
+      name="heatingResistor.alpha"
+      valueReference="16777221"
+      description="Temperature coefficient of resistance (R = R_ref*(1 + alpha*(heatPort.T - T_ref))"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.LinearTemperatureCoefficient"
+        start="0.00392156862745098"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 9 -->
+    <ScalarVariable
+      name="thermalConductor.G"
+      valueReference="16777222"
+      description="Constant thermal conductance of material"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.ThermalConductance"
+        start="0.1"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 10 -->
+    <ScalarVariable
+      name="idealSwitch.Ron"
+      valueReference="16777223"
+      description="Closed switch resistance"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Resistance"
+        min="0.0"
+        start="1E-05"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 11 -->
+    <ScalarVariable
+      name="idealSwitch.Goff"
+      valueReference="16777224"
+      description="Opened switch conductance"
+      causality="parameter"
+      variability="tunable">
+      <Real
+        declaredType="Modelica.SIunits.Conductance"
+        min="0.0"
+        start="1E-05"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 12 -->
+    <ScalarVariable
+      name="T"
+      valueReference="335544320"
+      description="Absolute temperature in degree Celsius as output signal"
+      causality="output">
+      <Real
+        declaredType="Modelica.Blocks.Interfaces.RealOutput"
+        unit="degC"/>
+    </ScalarVariable>
+    <!-- Index for next variable = 13 -->
+    <ScalarVariable
+      name="u"
+      valueReference="352321536"
+      description="true =&gt; switch open, false =&gt; p--n connected"
+      causality="input"
+      variability="discrete">
+      <Boolean
+        declaredType="Modelica.Blocks.Interfaces.BooleanInput"
+        start="false"/>
+    </ScalarVariable>
+  </ModelVariables>
+  <ModelStructure>
+    <Outputs>
+      <Unknown index="12"
+        dependencies="4"
+        dependenciesKind="fixed"/>
+    </Outputs>
+    <Derivatives>
+      <Unknown index="5"
+        dependencies="4 13"
+        dependenciesKind="fixed dependent"/>
+    </Derivatives>
+    <InitialUnknowns>
+      <Unknown index="4"
+        dependencies="1 7 8"
+        dependenciesKind="dependent dependent dependent"/>
+      <Unknown index="5"
+        dependencies="1 2 3 6 7 8 9 10 11 13"
+        dependenciesKind="dependent dependent dependent dependent dependent dependent dependent dependent dependent dependent"/>
+      <Unknown index="12"
+        dependencies="1 7 8"
+        dependenciesKind="dependent dependent dependent"/>
+    </InitialUnknowns>
+  </ModelStructure>
+</fmiModelDescription>
