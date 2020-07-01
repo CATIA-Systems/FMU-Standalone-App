@@ -21,3 +21,7 @@ if (MSVC)
   add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
   target_link_libraries(Heater shlwapi.lib)
 endif ()
+
+if (UNIX)
+  target_link_libraries(Heater m ${CMAKE_DL_LIBS})
+endif (UNIX)
