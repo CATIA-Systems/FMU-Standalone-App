@@ -59,3 +59,15 @@ time, u, T
 - run `cmake --build build` to build the app
 
 - run the app with `./build/Heater`
+
+### Exporting the FMU
+
+- in Dymola 2021 click `File > Open > Load...` and select `Heater.mo`
+
+- on the `Simulation` tab open the `Translate` menu and select `FMU`
+
+![Translate FMU](Translate-FMU.png)
+
+- in the `Export FMU` select the following options and click `OK`
+
+![Export FMU](Export-FMU.png)
