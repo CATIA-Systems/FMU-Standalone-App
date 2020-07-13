@@ -30,12 +30,13 @@ time, u, T
 
 ## Project Structure
 
-- `Heater.mo` - Modelica model of the Heater
-- `model/` - extracted FMU (exported with Dymola 2021)
-- `include/fmi2*.h` - FMI headers
-- `include/model.h` - model specific constants
-- `src/simulator.c` - source code of the standalone app
-- `CMakeLists.txt` - the CMake project
+- [Heater.mo](Heater.mo) - Modelica model of the Heater
+- [model](model) - extracted FMU (exported with Dymola 2021)
+- [include/fmi2*.h](include) - FMI headers
+- [include/model.h](include/model.h) - model specific constants
+- [src/simulator.c](src/simulator.c) - source code of the standalone app
+- [import_fmu.py](import_fmu.py) - Python script to reimport the FMU
+- [CMakeLists.txt](CMakeLists.txt) - the CMake project
 
 ## Building the Standalone App
 
