@@ -1,7 +1,7 @@
 # Building a standalone app from a source code FMU
 
-This project demonstrates how to run an [FMI 2.0](https://fmi-standard.org/) source code FMU as a standalone app.
-It consists of a simple C program that creates an instance of the `Heater` model. Its simulation loop turns the power for the `heatingResistor` on and off by setting the input variable `u` to keep the temperature `T` of the `heatCapacitor` at 40 °C.
+This project demonstrates how to simulate an [FMI 2.0](https://fmi-standard.org/) source code FMU as a standalone app.
+It consists of a [simple C program](src/simulator.c) that creates an instance of the `Heater` model. Its simulation loop turns the power for the `heatingResistor` on and off by setting the input variable `u` to keep the temperature `T` of the `heatCapacitor` at 40 °C.
 
 ![Heater.mo](Heater.png)
 
@@ -31,26 +31,29 @@ time, u, T
 ## Project Structure
 
 - `Heater.mo` - Modelica model of the Heater
-- `Heater/` - extracted FMU (exported with Dymola 2021)
-- `include/` - FMI headers
-- `src/heater.c` - source code of the standalone app
+- `model/` - extracted FMU (exported with Dymola 2021)
+- `include/fmi2*.h` - FMI headers
+- `include/model.h` - model specific constants
+- `src/simulator.c` - source code of the standalone app
 - `CMakeLists.txt` - the CMake project
 
 ## Building the Standalone App
 
 ### Prerequisites
 
-- clone or download and extract this repository
-- install [CMake](https://cmake.org/)
-- install a supported toolchain (run `cmake --help` to get a list of all available generators)
+- a clone or extracted download of this repository
+- [CMake](https://cmake.org/) to generate the Visual Studio solution on Windows or Makefiles on Linux 
+- a supported toolchain to build the App (run `cmake --help` to get a list of all available generators)
+- [Dymola](https://www.3ds.com/products-services/catia/products/dymola/trial-version/) to export the FMU (optional)
+- Python and [FMPy](https://github.com/CATIA-Systems/FMPy) to reimport the FMU (optional)
 
 ### Building on Windows with Visual Studio
 
 - run `cmake -G"Visual Studio 15 2017 Win64" -Bbuild .` to generate a Visual Studio 2017 solution
 
-- open `build/Heater.sln` in Visual Studio 2017
+- open `build/simulator.sln` in Visual Studio 2017
 
-- In the Project Explorer right-click on the `Heater` project and select `Debug > Start new instance` to build and run the app
+- In the Project Explorer right-click on the `simulator` project and select `Debug > Start new instance` to build and run the app
 
 ### Building on Linux with GCC
 
@@ -58,7 +61,7 @@ time, u, T
 
 - run `cmake --build build` to build the app
 
-- run the app with `./build/Heater`
+- run the app with `./build/simulator`
 
 ### Exporting the FMU
 
@@ -71,3 +74,14 @@ time, u, T
 - in the `Export FMU` select the following options and click `OK`
 
 ![Export FMU](Export-FMU.png)
+
+### Reimporting the FMU
+
+To reimport the FMU run the following command
+
+```
+python import_fmu.py Heater.fmu
+```
+
+This will extract `Heater.fmu` to the `model` directory and create a `include/model.h` with the model specific constant.
+The script requires Python and [FMPy](https://github.com/CATIA-Systems/FMPy).

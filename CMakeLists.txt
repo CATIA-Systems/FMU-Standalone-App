@@ -1,27 +1,26 @@
 cmake_minimum_required (VERSION 3.2)
 
-set (MODEL_NAME Heater)
+project (simulator)
 
-project (Heater)
-
-add_executable(Heater
+add_executable(simulator
   include/fmi2Functions.h
   include/fmi2FunctionTypes.h
   include/fmi2TypesPlatform.h
-  src/heater.c
-  Heater/sources/all.c
+  include/model.h
+  src/simulator.c
+  model/sources/all.c
 )
 
-target_include_directories(Heater PUBLIC
+target_include_directories(simulator PUBLIC
   include
-  Heater/sources
+  model/sources
 )
 
 if (MSVC)
   add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
-  target_link_libraries(Heater shlwapi.lib)
+  target_link_libraries(simulator shlwapi.lib)
 endif ()
 
 if (UNIX)
-  target_link_libraries(Heater m ${CMAKE_DL_LIBS})
+  target_link_libraries(simulator m ${CMAKE_DL_LIBS})
 endif (UNIX)
