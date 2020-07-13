@@ -42,7 +42,7 @@ time, u, T
 
 ### Prerequisites
 
-- a clone or extracted download of this repository
+- a clone or extracted [download](https://github.com/CATIA-Systems/FMU-Standalone-App/archive/master.zip) of this repository
 - [CMake](https://cmake.org/) to generate the Visual Studio solution on Windows or Makefiles on Linux 
 - a supported toolchain to build the App (run `cmake --help` to get a list of all available generators)
 - [Dymola](https://www.3ds.com/products-services/catia/products/dymola/trial-version/) to export the FMU (optional)
