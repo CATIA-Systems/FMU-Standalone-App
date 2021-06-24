@@ -1,4 +1,4 @@
-# Building a standalone app from a source code FMU
+# Embedding an FMU into a standalone app
 
 This project demonstrates how to simulate an [FMI 2.0](https://fmi-standard.org/) source code FMU as a standalone app.
 It consists of a [simple C program](src/simulator.c) that creates an instance of the `Heater` model. Its simulation loop turns the power for the `heatingResistor` on and off by setting the input variable `u` to keep the temperature `T` of the `heatCapacitor` at 40 °C.
@@ -36,14 +36,15 @@ time, u, T
 - [include/model.h](include/model.h) - model specific constants
 - [src/simulator.c](src/simulator.c) - source code of the standalone app
 - [import_fmu.py](import_fmu.py) - Python script to reimport the FMU
-- [CMakeLists.txt](CMakeLists.txt) - the CMake project
+- [CMakeLists.txt](CMakeLists.txt) - the CMake project for the console app
+- [Heater](Heater) - Qt project for the graphical app
 
 ## Building the Standalone App
 
 ### Prerequisites
 
 - a clone or extracted [download](https://github.com/CATIA-Systems/FMU-Standalone-App/archive/master.zip) of this repository
-- [CMake](https://cmake.org/) to generate the Visual Studio solution on Windows or Makefiles on Linux 
+- [CMake](https://cmake.org/) to generate the Visual Studio solution on Windows or Makefiles on Linux
 - a supported toolchain to build the App (run `cmake --help` to get a list of all available generators)
 - [Dymola](https://www.3ds.com/products-services/catia/products/dymola/trial-version/) to export the FMU (optional)
 - Python and [FMPy](https://github.com/CATIA-Systems/FMPy) to reimport the FMU (optional)
@@ -86,3 +87,21 @@ python import_fmu.py Heater.fmu
 
 This will extract `Heater.fmu` to the `model` directory and create a `include/model.h` with the model specific constant.
 The script requires Python and [FMPy](https://github.com/CATIA-Systems/FMPy).
+
+## Embedding an FMU into a graphical Qt app
+
+The "Heater" Qt app demonstrates how to embed an FMU into an application with a graphical user interface (GUI).
+It has a spin box to set the `TAmb` parameter and a push button to control the input `u` that closes the `idealSwitch`. The temperature `T` is displayed as an LCD number.
+
+![Graphical Heater Qt App](Heater/HeaterApp.png)
+
+### Building the Qt App
+
+- install [Qt 6](https://www.qt.io/)
+- open QtCreator, import `Heater/CMakeLists.txt` and conifigure the project
+- build the project and copy `model/binaries/win64/Heater.dll` next to `Heater.exe`
+- run the project
+
+### Deploying the Qt App
+
+To deploy the Qt app use [windeployqt.exe](https://doc.qt.io/qt-5/windows-deployment.html).
