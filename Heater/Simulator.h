@@ -12,7 +12,7 @@ class Simulator : public QThread
 
 signals:
     void resultReady(double temperature);
-
+    void errorMessage(QString message);
 
 public slots:
     void openSwitch();

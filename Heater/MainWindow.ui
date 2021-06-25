@@ -39,9 +39,9 @@
    <widget class="QPushButton" name="switchPushButton">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>10</x>
       <y>160</y>
-      <width>101</width>
+      <width>141</width>
       <height>41</height>
      </rect>
     </property>

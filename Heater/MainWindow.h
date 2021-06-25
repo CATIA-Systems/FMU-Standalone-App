@@ -22,6 +22,7 @@ private:
 
 private slots:
     void showTemperature(double temperature);
+    void handleError(const QString &message);
 
 };
 #endif // MAINWINDOW_H

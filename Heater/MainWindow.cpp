@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "./ui_MainWindow.h"
 #include "Simulator.h"
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -15,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->TAmbDoubleSpinBox, &QDoubleSpinBox::valueChanged, worker, &Simulator::setAmbientTemperature);
 
     connect(worker, &Simulator::resultReady, this, &MainWindow::showTemperature);
+    connect(worker, &Simulator::errorMessage, this, &MainWindow::handleError);
 
     worker->start();
 }
@@ -31,3 +33,8 @@ void MainWindow::showTemperature(double temperature)
     ui->temperatureLcdNumber->display(temperature);
 }
 
+void MainWindow::handleError(const QString &message)
+{
+    QMessageBox::critical(this, "An error occurred", message);
+    QApplication::exit(1);
+}

@@ -1,5 +1,7 @@
 #include "Simulator.h"
 #include "model.h" // information from the modelDescription.xml
+#include <QApplication>
+#include <QDir>
 
 // no runtime resources
 #define RESOURCE_LOCATION ""
@@ -18,19 +20,35 @@ static void cb_freeMemory(void* obj) {
 }
 
 // TODO: return error message if status != fmi2OK
-#define CHECK_STATUS(c) c
+#define CHECK_STATUS(c) status = c; if (status > fmi2Warning) { emit errorMessage("The FMU return an error status."); goto OUT; }
 
 
 void Simulator::run()
 {
-    // DLL must be placed next to the executable
-    fmu = new FMU("Heater.dll");
+    const QString sharedLibrary = QApplication::applicationDirPath() + QDir::separator() +
+#ifdef _WIN32
+            "Heater.dll";
+#else
+            "Heater.so";
+#endif
+
+    if (!QFileInfo::exists(sharedLibrary)) {
+        emit errorMessage("Failed to load " + sharedLibrary + ". The shared library must be placed next to the executable.");
+        return;
+    }
+
+    fmu = new FMU(sharedLibrary);
 
     fmi2Status status = fmi2OK;
 
     fmi2CallbackFunctions callbacks = { cb_logMessage, cb_allocateMemory, cb_freeMemory, NULL, NULL };
 
-    fmi2Component c = fmu->m_fmi2Instantiate("instance1", fmi2CoSimulation, GUID, RESOURCE_LOCATION, &callbacks, fmi2False, fmi2False);
+    const fmi2Component c = fmu->m_fmi2Instantiate("instance1", fmi2CoSimulation, GUID, RESOURCE_LOCATION, &callbacks, fmi2False, fmi2False);
+
+    if (!c) {
+        emit errorMessage("Failed to instantiate FMU.");
+        return;
+    }
 
     fmi2Real time = 0;
     fmi2Real stepSize = 0.1;
@@ -69,6 +87,8 @@ void Simulator::run()
         msleep(stepSize * 1000);
      }
 
+    OUT:
+    return;
 }
 
 void Simulator::openSwitch()
