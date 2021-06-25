@@ -20,7 +20,7 @@ static void cb_freeMemory(void* obj) {
 }
 
 // TODO: return error message if status != fmi2OK
-#define CHECK_STATUS(c) status = c; if (status > fmi2Warning) { emit errorMessage("The FMU return an error status."); goto out; }
+#define CHECK_STATUS(c) status = c; if (status > fmi2Warning) { emit errorMessage("The FMU return an error status."); return; }
 
 
 void Simulator::run()
@@ -87,8 +87,6 @@ void Simulator::run()
         msleep(stepSize * 1000);
      }
 
-    out:
-    return;
 }
 
 void Simulator::openSwitch()
